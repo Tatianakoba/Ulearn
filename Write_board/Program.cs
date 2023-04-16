@@ -11,7 +11,7 @@ namespace Write_board
     {
         private static void WriteBoard(int size)
         {
-            size = size;
+            
             
             for (int i = 0; i < size; i++)
             {

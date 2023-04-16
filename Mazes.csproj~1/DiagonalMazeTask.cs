@@ -1,54 +1,31 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
+﻿
+using System;
 
 namespace Mazes
 {
-	public static class DiagonalMazeTask
-    {        
+    public static class DiagonalMazeTask
+    {
         public static void MoveOut(Robot robot, int width, int height)
-		{
-            var a = Math.Round((double)(width / height));
-            var b = Math.Round((double)(height / width));
-            while (!robot.Finished)
+        {
+            int aspectRatio;
+            while (robot.Finished == false)
             {
-                if (width == height)
+                if (width > height)
                 {
-                    robot.MoveTo(Direction.Down);
-
-                    robot.MoveTo(Direction.Right);
-
-                    if (robot.Finished) break;
+                    aspectRatio = (width - 2) / (height - 2);
+                    Move(robot, aspectRatio, Direction.Right, Direction.Down);
                 }
-                
-
-                else if (width > height)
+                else
                 {
-                    for (int i = 0; i <= a+1; i++)
-                    {
-                        robot.MoveTo(Direction.Right);
-                    }
-                    
-
-                    robot.MoveTo(Direction.Down);
-                    if (robot.Finished) break;
+                    aspectRatio = (height - 2) / (width - 2);
+                    Move(robot, aspectRatio, Direction.Down, Direction.Right);
                 }
-                else 
-                {
-                    robot.MoveTo(Direction.Down);
-                    
-                    for (int i = 0; i < b; i++)
-                    {
-                        robot.MoveTo(Direction.Right);
-                        
-                    }
-                    if (robot.Finished) break;
-                }
-
-
-                if (robot.Finished) break;
             }
-            
-
         }
-	}
+        public static void Move(Robot robot, int aspectRatio, Direction direction, Direction directionTwo)
+        {
+            if (!robot.Finished) for (var i = 0; i < aspectRatio; i++) robot.MoveTo(direction);
+            if (!robot.Finished) robot.MoveTo(directionTwo);
+        }
+    }
 }
